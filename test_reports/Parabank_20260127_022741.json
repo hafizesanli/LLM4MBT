@@ -1,0 +1,14 @@
+{
+  "timestamp": "20260127_022741",
+  "test_file": "graphwalker_test_path_logs/Parabank.txt",
+  "model_file": "json_models/Parabank.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 100.0,
+    "vertex_coverage": 100.0,
+    "covered_edges": 144,
+    "total_edges": 144,
+    "covered_vertices": 75,
+    "total_vertices": 75
+  }
+}

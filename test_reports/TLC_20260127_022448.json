@@ -1,0 +1,14 @@
+{
+  "timestamp": "20260127_022448",
+  "test_file": "graphwalker_test_path_logs/TLC.txt",
+  "model_file": "json_models/TLC.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 100.0,
+    "vertex_coverage": 100.0,
+    "covered_edges": 18,
+    "total_edges": 18,
+    "covered_vertices": 10,
+    "total_vertices": 10
+  }
+}
