@@ -1,0 +1,635 @@
+{
+  "metadata": {
+    "project": "LLM4MBT - LLM for Model-Based Testing",
+    "author": "Hafize Sanlı",
+    "description": "Prompts used to generate GraphWalker model-based test cases with different coverage strategies (REC, QEC, VC) for three different models",
+    "date_created": "2026-01-27",
+    "last_updated": "2026-02-02",
+    "version": "2.0",
+    "research_goal": "Evaluate and compare the ability of different LLMs to generate valid test suites with various coverage strategies (Random Edge Coverage, Quick Random Edge Coverage, Random Vertex Coverage) for finite state machine models"
+  },
+  
+  "coverage_strategies": {
+    "REC": {
+      "name": "Random Edge Coverage",
+      "description": "Generates test paths using random(edge_coverage(100)) algorithm",
+      "graphwalker_command": "random(edge_coverage(100))",
+      "target": "100% edge coverage",
+      "directory_prefix": "REC-"
+    },
+    "QEC": {
+      "name": "Quick Random Edge Coverage",
+      "description": "Generates test paths using quick_random(edge_coverage(100)) algorithm",
+      "graphwalker_command": "quick_random(edge_coverage(100))",
+      "target": "100% edge coverage",
+      "directory_prefix": "QEC-"
+    },
+    "VC": {
+      "name": "Vertex Coverage",
+      "description": "Generates test paths using random(vertex_coverage(100)) algorithm",
+      "graphwalker_command": "random(vertex_coverage(100))",
+      "target": "100% vertex coverage",
+      "directory_prefix": "VC-"
+    }
+  },
+  
+  "models": {
+    "TLC": {
+      "model_name": "Traffic Light Controller",
+      "model_file": "json_models/TLC.json",
+      "complexity": "Simple",
+      "vertices": 10,
+      "edges": 18,
+      "description": "A simple finite state machine representing a traffic light controller with states q0-q8 and start vertex"
+    },
+    "Parabank": {
+      "model_name": "Banking Application",
+      "model_file": "json_models/Parabank.json",
+      "complexity": "Complex",
+      "vertices": "60+",
+      "edges": "150+",
+      "description": "Multi-module banking application with Login, Register, AccountOverview modules"
+    },
+    "Testinium": {
+      "model_name": "Test Management Platform",
+      "model_file": "json_models/Testinium.json",
+      "complexity": "Very Complex",
+      "vertices": "100+",
+      "edges": "200+",
+      "description": "Enterprise test management platform with multiple modules: Login, Dashboard, Reports, Projects, Scenarios, Suites"
+    }
+  },
+  
+  "output_format": {
+    "format_name": "GraphWalker Raw Format",
+    "description": "Space-separated JSON objects containing currentElementName field",
+    "example": "{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+    "requirements": [
+      "Each element must be a JSON object with 'currentElementName' field",
+      "Objects must be separated by single spaces",
+      "Elements include both vertices (states) and edges (transitions)",
+      "The sequence must follow valid paths in the model",
+      "Must achieve the target coverage (edge or vertex depending on strategy)"
+    ]
+  },
+  
+  "prompt_templates": {
+    "REC": {
+      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+      "variations": {
+        "per_model_detailed": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model {MODEL_NAME}.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below: {\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}...\nDon't create python script, just give me the test suite in a txt file and save it in {LLM_FOLDER} folder.",
+        "explicit_no_copy": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files ({LLM_FOLDER}/Parabank.txt, {LLM_FOLDER}/Testinium.txt, {LLM_FOLDER}/TLC.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
+      }
+    },
+    "QEC": {
+      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+      "note": "Use 'quick_random' (with underscore) instead of 'quick random' (with space) - the underscore version works better with most LLMs"
+    },
+    "VC": {
+      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
+    }
+  },
+  
+  "llm_experiments": {
+  
+  "llm_experiments": {
+    "Claude-Haiku-4.5": {
+      "llm_name": "Claude Haiku 4.5",
+      "provider": "Anthropic",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-Claude-Haiku-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model TLC.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below: {\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}...\nDon't create python script, just give me the test suite in a txt file and save it in Claude-Haiku-4.5 folder.",
+              "status": "success",
+              "notes": "Generated TLC test suite successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "Now do the same thing for provided json model. (Parabank.json)",
+              "status": "success",
+              "notes": "Generated Parabank test suite"
+            },
+            {
+              "attempt": 3,
+              "prompt": "Now do the same thing for provided model. (Testinium.json)",
+              "status": "success",
+              "notes": "Generated Testinium test suite"
+            }
+          ]
+        }
+      }
+    },
+    
+    "Claude-Opus-3.5": {
+      "llm_name": "Claude Opus 4.5",
+      "provider": "Anthropic",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-Claude-Opus-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models in one attempt"
+            }
+          ]
+        },
+        "QEC": {
+          "output_directory": "QEC-Claude-Opus-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Response reached length limit, no response provided"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Using 'quick_random' with underscore worked"
+            }
+          ]
+        },
+        "VC": {
+          "output_directory": "VC-Claude-Opus-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        }
+      }
+    },
+    
+    "Claude-Sonnet-4.5": {
+      "llm_name": "Claude Sonnet 4.5",
+      "provider": "Anthropic",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-Claude-Sonnet-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        },
+        "QEC": {
+          "output_directory": "QEC-Claude-Sonnet-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Generated random edge coverage instead of quick_random"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Using 'quick_random' with underscore worked"
+            }
+          ]
+        },
+        "VC": {
+          "output_directory": "VC-Claude-Sonnet-4.5/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        }
+      }
+    },
+    
+    "GPT-5.1": {
+      "llm_name": "GPT-5.1",
+      "provider": "OpenAI",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-GPT-5.1/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Created Python script instead of generating test suite"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (GPT-5.1/Parabank.txt, GPT-5.1/Testinium.txt, GPT-5.1/TLC.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "partial",
+              "error": "Generated TLC partially in chat, asked user to paste to txt file. Said other files were empty (but they weren't)"
+            },
+            {
+              "attempt": 3,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (GPT-5.1/Parabank.txt, GPT-5.1/Testinium.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "partial",
+              "error": "Again wrote to chat and asked user to paste to txt files"
+            }
+          ]
+        },
+        "QEC": {
+          "output_directory": "QEC-GPT-5.1/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Said it couldn't do it and recommended using graphwalker tool directly"
+            }
+          ]
+        },
+        "VC": {
+          "output_directory": "VC-GPT-5.1/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        }
+      }
+    },
+    
+    "GPT-5.2": {
+      "llm_name": "GPT-5.2",
+      "provider": "OpenAI",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-GPT-5.2/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (GPT-5.2/Parabank.txt, GPT-5.2/Testinium.txt, GPT-5.2/TLC.txt). Don't copy other folder's txt files, create yourself. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        },
+        "QEC": {
+          "output_directory": "QEC-GPT-5.2/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        },
+        "VC": {
+          "output_directory": "VC-GPT-5.2/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully"
+            }
+          ]
+        }
+      }
+    },
+    
+    "GPT-Codex": {
+      "llm_name": "GPT-Codex",
+      "provider": "OpenAI",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-GPT-Codex/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Error occurred, no successful generation"
+            }
+          ]
+        }
+      }
+    },
+    
+    "GPT-Codex-Max": {
+      "llm_name": "GPT-Codex-Max",
+      "provider": "OpenAI",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-GPT-Codex-Max/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "No response provided"
+            }
+          ]
+        }
+      }
+    },
+    
+    "Gemini-3-Pro": {
+      "llm_name": "Gemini 3 Pro",
+      "provider": "Google",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-Gemini-3-Pro/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Copied files from other folders instead of generating"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (Gemini-3-Pro/Parabank.txt, Gemini-3-Pro/Testinium.txt, Gemini-3-Pro/TLC.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "No response provided"
+            },
+            {
+              "attempt": 3,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (Gemini-3-Pro/Parabank.txt, Gemini-3-Pro/Testinium.txt, Gemini-3-Pro/TLC.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Created Python script, then no response on retry (2 times)"
+            }
+          ]
+        }
+      }
+    },
+    
+    "Gemini-3-Flash": {
+      "llm_name": "Gemini 3 Flash",
+      "provider": "Google",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-Gemini-3-Flash/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "No response provided (tried 2 times)"
+            }
+          ]
+        }
+      }
+    },
+    
+    "Gemini-2.5-Pro": {
+      "llm_name": "Gemini 2.5 Pro",
+      "provider": "Google",
+      "strategies": {
+        "REC": {
+          "output_directory": "REC-Gemini-2.5-Pro/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "error": "Misunderstood, tried to run graphwalker command"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (Gemini-2.5-Pro/Parabank.txt, Gemini-2.5-Pro/Testinium.txt, Gemini-2.5-Pro/TLC.txt). Don't copy other folder's txt files or run a graphwalker command, create yourself. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully after clarification"
+            }
+          ]
+        },
+        "QEC": {
+          "output_directory": "QEC-Gemini-2.5-Pro/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated all three models successfully after clarification"
+            }
+          ]
+        },
+        "VC": {
+          "output_directory": "VC-Gemini-2.5-Pro/",
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Required 3 attempts with same prompt to get response"
+            }
+          ]
+        }
+      }
+    }
+  },
+  
+  "best_practices": {
+    "successful_prompts": {
+      "key_elements": [
+        "Explicitly state 'random edge coverage' or 'vertex coverage' or 'quick_random edge coverage'",
+        "Use exact GraphWalker terminology (underscore in 'quick_random', not space)",
+        "Show example format clearly",
+        "Specify output file paths explicitly",
+        "Add 'Don't copy other folders' and 'Don't create Python script' warnings",
+        "Request all three models at once (works better for most LLMs)"
+      ],
+      "most_effective_template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% {STRATEGY} coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
+    },
+    "common_failures": {
+      "copying_files": {
+        "llms_affected": ["Gemini-3-Pro"],
+        "solution": "Add explicit instruction: 'Don't copy other folder's txt files, create yourself'"
+      },
+      "python_scripts": {
+        "llms_affected": ["GPT-5.1", "Gemini-3-Pro"],
+        "solution": "Add explicit instruction: 'Don't create a python script for that. Just do what I said'"
+      },
+      "chat_output": {
+        "llms_affected": ["GPT-5.1"],
+        "solution": "Some LLMs prefer to output to chat and ask user to paste. May need explicit file writing instruction"
+      },
+      "misunderstanding_task": {
+        "llms_affected": ["Gemini-2.5-Pro"],
+        "solution": "Add: 'Don't run a graphwalker command, create yourself'"
+      },
+      "no_response": {
+        "llms_affected": ["GPT-Codex-Max", "Gemini-3-Flash", "Gemini-3-Pro"],
+        "solution": "May need to break down into smaller requests or try different prompt variations"
+      },
+      "length_limit": {
+        "llms_affected": ["Claude-Opus-3.5"],
+        "solution": "Response may hit token limit. Use 'quick_random' for shorter paths or request models separately"
+      },
+      "wrong_coverage": {
+        "llms_affected": ["Claude-Sonnet-4.5"],
+        "solution": "Use exact GraphWalker terminology with underscores: 'quick_random' not 'quick random'"
+      }
+    },
+    "llm_rankings": {
+      "most_reliable": [
+        "Claude-Sonnet-4.5",
+        "Claude-Opus-3.5",
+        "GPT-5.2"
+      ],
+      "needs_careful_prompting": [
+        "GPT-5.1",
+        "Gemini-2.5-Pro"
+      ],
+      "difficult_to_work_with": [
+        "Gemini-3-Pro",
+        "Gemini-3-Flash",
+        "GPT-Codex",
+        "GPT-Codex-Max"
+      ]
+    }
+  },
+  
+  "experiment_protocol": {
+    "step_1": {
+      "action": "Choose coverage strategy",
+      "options": ["REC (Random Edge Coverage)", "QEC (Quick Random Edge Coverage)", "VC (Vertex Coverage)"],
+      "description": "Decide which coverage strategy to test"
+    },
+    "step_2": {
+      "action": "Prepare LLM directory",
+      "command": "mkdir {STRATEGY}-{LLM-Name}/",
+      "example": "mkdir REC-Claude-Sonnet-4.5/",
+      "description": "Create a directory with strategy prefix for each LLM being tested"
+    },
+    "step_3": {
+      "action": "Provide model files to LLM",
+      "files": [
+        "json_models/TLC.json",
+        "json_models/Parabank.json",
+        "json_models/Testinium.json"
+      ],
+      "description": "Give the LLM access to the GraphWalker JSON model files"
+    },
+    "step_4": {
+      "action": "Submit appropriate prompt",
+      "description": "Use the prompt template from 'prompt_templates' section, replacing {STRATEGY} with your chosen strategy",
+      "note": "Check 'best_practices' section for LLM-specific adjustments"
+    },
+    "step_5": {
+      "action": "Verify output format",
+      "description": "Ensure the generated test suites are in raw format with proper JSON structure",
+      "validation": "Each line should contain space-separated {\"currentElementName\":\"name\"} objects"
+    },
+    "step_6": {
+      "action": "Run tests",
+      "command": "python main.py --all {STRATEGY}-{LLM-Name}/",
+      "example": "python main.py --all REC-Claude-Sonnet-4.5/",
+      "description": "Execute all test suites for the LLM and collect results"
+    },
+    "step_7": {
+      "action": "Compare results",
+      "command": "python main.py --compare {STRATEGY}-{LLM-1}/ {STRATEGY}-{LLM-2}/ {STRATEGY}-{LLM-3}/",
+      "example": "python main.py --compare REC-Claude-Sonnet-4.5/ REC-GPT-5.2/ REC-Gemini-2.5-Pro/",
+      "description": "Generate comparison reports across all tested LLMs for same strategy"
+    },
+    "step_8": {
+      "action": "Update results",
+      "description": "Document the successful prompts and any issues encountered in this file",
+      "location": "Update 'llm_experiments' section with attempt results"
+    }
+  },
+  
+  "evaluation_criteria": {
+    "primary_metrics": {
+      "edge_coverage": {
+        "description": "Percentage of edges covered in the model",
+        "target_REC": "100%",
+        "target_QEC": "100%",
+        "target_VC": "May be lower, depends on model structure",
+        "formula": "(covered_edges / total_edges) × 100%",
+        "pass_threshold": "≥70%"
+      },
+      "vertex_coverage": {
+        "description": "Percentage of vertices visited in the model",
+        "target_REC": "May be lower than 100%",
+        "target_QEC": "May be lower than 100%",
+        "target_VC": "100%",
+        "formula": "(covered_vertices / total_vertices) × 100%",
+        "pass_threshold": "≥85%"
+      },
+      "success_rate": {
+        "description": "Percentage of test suites that passed validation",
+        "target": "100%",
+        "formula": "(passed_tests / total_tests) × 100%"
+      }
+    },
+    "success_determination": {
+      "rule": "Test passes if (edge_coverage ≥ 70%) OR (vertex_coverage ≥ 85%)",
+      "rationale": "Different strategies optimize for different coverage types",
+      "note": "REC/QEC tests should achieve high edge coverage; VC tests should achieve high vertex coverage"
+    },
+    "secondary_metrics": {
+      "path_validity": {
+        "description": "Whether all transitions in the test suite are valid according to the model",
+        "importance": "Critical for test suite validity"
+      },
+      "format_compliance": {
+        "description": "Whether the output matches the required raw format",
+        "importance": "Required for automated processing"
+      },
+      "path_length": {
+        "description": "Number of steps in the test path",
+        "importance": "QEC may produce longer paths than REC for same coverage"
+      }
+    }
+  },
+  
+  "research_notes": {
+    "hypothesis": "Modern LLMs can effectively generate valid model-based test cases with different coverage strategies for finite state machine models",
+    "variables": {
+      "independent": [
+        "LLM model used (Claude, GPT, Gemini)",
+        "Coverage strategy (REC, QEC, VC)"
+      ],
+      "dependent": [
+        "Edge coverage percentage",
+        "Vertex coverage percentage",
+        "Test suite validity",
+        "Path length"
+      ],
+      "controlled": [
+        "Model files (same for all LLMs)",
+        "Base prompt structure (consistent across LLMs)",
+        "Evaluation criteria (same validation logic)"
+      ]
+    },
+    "expected_outcomes": [
+      "REC and QEC should achieve similar edge coverage, but QEC may have longer paths",
+      "VC should achieve high vertex coverage but may have lower edge coverage",
+      "All LLMs should achieve >90% target coverage on simple TLC model",
+      "Complex models (Parabank, Testinium) will reveal capability differences",
+      "Format compliance may vary across LLMs",
+      "Larger context window models may perform better on complex models"
+    ],
+    "findings": [
+      "Claude models (Opus, Sonnet) are most reliable for all strategies",
+      "GPT-5.2 performs well with explicit file path instructions",
+      "GPT-5.1 tends to output to chat instead of creating files",
+      "Gemini models often misunderstand instructions or copy files",
+      "Using 'quick_random' (underscore) vs 'quick random' (space) matters",
+      "Gemini-2.5-Pro needs explicit 'don't run graphwalker command' instruction",
+      "Some LLMs hit response length limits on complex models"
+    ]
+  }
+  }
+}

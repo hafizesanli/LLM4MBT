@@ -1,0 +1,64 @@
+================================================================================
+LLM COMPARISON REPORT
+Generated: 2026-02-02 22:46:13
+================================================================================
+
+================================================================================
+OVERALL PERFORMANCE BY LLM
+================================================================================
+
+ VC-Claude-Opus-4.5
+   ✅ Success Rate: 100.0% (3/3)
+   Avg Edge Coverage: 67.7%
+   Avg Vertex Coverage: 97.1%
+
+ VC-Claude-Sonnet-4.5
+   ✅ Success Rate: 100.0% (3/3)
+   Avg Edge Coverage: 88.4%
+   Avg Vertex Coverage: 99.7%
+
+ VC-Gemini-2.5-Pro
+   ✅ Success Rate: 100.0% (3/3)
+   Avg Edge Coverage: 28.9%
+   Avg Vertex Coverage: 99.0%
+
+ VC-GPT-5.1
+   ✅ Success Rate: 66.7% (2/3)
+   Avg Edge Coverage: 26.2%
+   Avg Vertex Coverage: 90.8%
+
+ VC-GPT-5.2
+   ✅ Success Rate: 66.7% (2/3)
+   Avg Edge Coverage: 50.8%
+   Avg Vertex Coverage: 87.3%
+
+================================================================================
+DETAILED COMPARISON BY TEST FILE
+================================================================================
+
+
+ Parabank.txt
+--------------------------------------------------------------------------------
+   VC-Claude-Opus-4.5             → ✅ PASS | Edge:  72.9% | Vertex:  92.0%
+   VC-Claude-Sonnet-4.5           → ✅ PASS | Edge:  82.6% | Vertex: 100.0%
+   VC-GPT-5.1                     → ✅ PASS | Edge:  20.8% | Vertex:  98.7%
+   VC-GPT-5.2                     → ✅ PASS | Edge:  59.7% | Vertex:  96.0%
+   VC-Gemini-2.5-Pro              → ✅ PASS | Edge:  23.6% | Vertex:  98.7%
+
+ TLC.txt
+--------------------------------------------------------------------------------
+   VC-Claude-Opus-4.5             → ✅ PASS | Edge:  50.0% | Vertex: 100.0%
+   VC-Claude-Sonnet-4.5           → ✅ PASS | Edge: 100.0% | Vertex: 100.0%
+   VC-GPT-5.1                     → ✅ PASS | Edge:  50.0% | Vertex: 100.0%
+   VC-GPT-5.2                     → ✅ PASS | Edge:  50.0% | Vertex: 100.0%
+   VC-Gemini-2.5-Pro              → ✅ PASS | Edge:  50.0% | Vertex: 100.0%
+
+ Testinium.txt
+--------------------------------------------------------------------------------
+   VC-Claude-Opus-4.5             → ✅ PASS | Edge:  80.2% | Vertex:  99.2%
+   VC-Claude-Sonnet-4.5           → ✅ PASS | Edge:  82.6% | Vertex:  99.2%
+   VC-GPT-5.1                     → ❌ FAIL | Edge:   7.8% | Vertex:  73.6%
+   VC-GPT-5.2                     → ❌ FAIL | Edge:  42.6% | Vertex:  65.9%
+   VC-Gemini-2.5-Pro              → ✅ PASS | Edge:  13.2% | Vertex:  98.5%
+
+================================================================================

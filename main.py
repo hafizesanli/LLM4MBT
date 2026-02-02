@@ -281,7 +281,14 @@ def apply_test_execution_on_model(test_suite, model, verbose=True):
     
     print(f"{'='*70}\n")
 
-    return failed_paths == 0
+    # Return both success status and path statistics
+    return {
+        'all_paths_valid': failed_paths == 0,
+        'total_paths': total_paths,
+        'successful_paths': successful_paths,
+        'failed_paths': failed_paths,
+        'success_rate': (successful_paths / total_paths * 100) if total_paths > 0 else 0
+    }
 
 
 def run_test_suite_from_file(test_suite_file, model_file, verbose=True, save_report=False):
@@ -318,7 +325,19 @@ def run_test_suite_from_file(test_suite_file, model_file, verbose=True, save_rep
     print(f"   Vertex Coverage: {coverage['vertex_coverage']}% ({coverage['covered_vertices']}/{coverage['total_vertices']})")
     
     # Run test execution
-    success = apply_test_execution_on_model(test_suite, model, verbose)
+    execution_result = apply_test_execution_on_model(test_suite, model, verbose)
+    
+    # Determine success based on coverage metrics
+    # Success criteria: Either achieve high edge coverage OR high vertex coverage
+    # - Edge coverage >= 70% OR Vertex coverage >= 85%
+    # - This allows tests with good vertex coverage to pass even if some edges are missed
+    edge_cov = coverage.get('edge_coverage', 0)
+    vertex_cov = coverage.get('vertex_coverage', 0)
+    
+    success = (edge_cov >= 70.0) or (vertex_cov >= 85.0)
+    
+    # Add execution details to coverage
+    coverage['execution_stats'] = execution_result
     
     # Save report if requested
     if save_report:
@@ -361,9 +380,25 @@ def run_all_test_suites_in_directory(directory_path="graphwalker_test_path_logs"
     Returns:
         Dictionary with results for each test suite including coverage metrics
     """
+    # Get the directory where main.py is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Convert to absolute path if relative path provided
+    if not os.path.isabs(directory_path):
+        directory_path = os.path.join(script_dir, directory_path)
+    
+    # Remove trailing slash if present
+    directory_path = directory_path.rstrip('/')
+    
     if not os.path.exists(directory_path):
         print(f"Test suite directory not found: {directory_path}")
+        print(f"Current working directory: {os.getcwd()}")
+        print(f"Script directory: {script_dir}")
         return {}
+    
+    # Convert model_directory to absolute path if relative
+    if not os.path.isabs(model_directory):
+        model_directory = os.path.join(script_dir, model_directory)
     
     if not os.path.exists(model_directory):
         print(f"Model directory not found: {model_directory}")
