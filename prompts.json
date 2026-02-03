@@ -42,20 +42,28 @@
       "edges": 18,
       "description": "A simple finite state machine representing a traffic light controller with states q0-q8 and start vertex"
     },
+    "Risc-V":{
+      "model_name": "RISC-V CPU",
+      "model_file": "json_models/Risc-V.json",
+      "complexity": "Moderate",
+      "vertices": 16,
+      "edges": 36,
+      "description": "A RISC-V CPU model with various instruction sets and pipelines"
+    },
     "Parabank": {
       "model_name": "Banking Application",
       "model_file": "json_models/Parabank.json",
       "complexity": "Complex",
-      "vertices": "60+",
-      "edges": "150+",
+      "vertices": 75,
+      "edges": 59,
       "description": "Multi-module banking application with Login, Register, AccountOverview modules"
     },
     "Testinium": {
       "model_name": "Test Management Platform",
       "model_file": "json_models/Testinium.json",
       "complexity": "Very Complex",
-      "vertices": "100+",
-      "edges": "200+",
+      "vertices": 129,
+      "edges": 259,
       "description": "Enterprise test management platform with multiple modules: Login, Dashboard, Reports, Projects, Scenarios, Suites"
     }
   },
@@ -75,18 +83,18 @@
   
   "prompt_templates": {
     "REC": {
-      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json, Parabank.json and Risc-V.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
       "variations": {
         "per_model_detailed": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model {MODEL_NAME}.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below: {\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}...\nDon't create python script, just give me the test suite in a txt file and save it in {LLM_FOLDER} folder.",
-        "explicit_no_copy": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files ({LLM_FOLDER}/Parabank.txt, {LLM_FOLDER}/Testinium.txt, {LLM_FOLDER}/TLC.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
+        "explicit_no_copy": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json, Parabank.json and Risc-V.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files ({LLM_FOLDER}/Parabank.txt, {LLM_FOLDER}/Testinium.txt, {LLM_FOLDER}/TLC.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
       }
     },
     "QEC": {
-      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json, Parabank.json and Risc-V.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
       "note": "Use 'quick_random' (with underscore) instead of 'quick random' (with space) - the underscore version works better with most LLMs"
     },
     "VC": {
-      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
+      "template": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json, Parabank.json and Risc-V.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}"
     }
   },
   
@@ -123,7 +131,7 @@
       }
     },
     
-    "Claude-Opus-3.5": {
+    "Claude-Opus-4.5": {
       "llm_name": "Claude Opus 4.5",
       "provider": "Anthropic",
       "strategies": {
@@ -135,6 +143,11 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models in one attempt"
+            },
+            {"attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -152,6 +165,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Using 'quick_random' with underscore worked"
+            },
+            {
+              "attempt": 3,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -163,6 +182,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         }
@@ -181,7 +206,13 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
-            }
+            },
+              {
+                "attempt": 2,
+                "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+                "status": "success",
+                "notes": "Generated Risc-V model successfully"
+              }
           ]
         },
         "QEC": {
@@ -198,6 +229,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Using 'quick_random' with underscore worked"
+            },
+            {
+              "attempt": 3,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -209,6 +246,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         }
@@ -239,6 +282,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (GPT-5.1/Parabank.txt, GPT-5.1/Testinium.txt). Don't copy other folder's txt files, create yourself. Don't create a python script for that. Just do what I said. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "partial",
               "error": "Again wrote to chat and asked user to paste to txt files"
+            },
+            {
+              "attempt": 4,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -250,6 +299,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "failed",
               "error": "Said it couldn't do it and recommended using graphwalker tool directly"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -261,6 +316,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         }
@@ -279,6 +340,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (GPT-5.2/Parabank.txt, GPT-5.2/Testinium.txt, GPT-5.2/TLC.txt). Don't copy other folder's txt files, create yourself. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -290,6 +357,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         },
@@ -301,6 +374,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "success",
+              "notes": "Generated Risc-V model successfully"
             }
           ]
         }
@@ -409,6 +488,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files (Gemini-2.5-Pro/Parabank.txt, Gemini-2.5-Pro/Testinium.txt, Gemini-2.5-Pro/TLC.txt). Don't copy other folder's txt files or run a graphwalker command, create yourself. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully after clarification"
+            },
+            {
+              "attempt": 3,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "notes": "Told added the test suites to the file but file was empty (3 times)"
             }
           ]
         },
@@ -420,6 +505,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Generated all three models successfully after clarification"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% quick_random edge coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "notes": "Told added the test suites to the file but file was empty (3 times)"
             }
           ]
         },
@@ -431,6 +522,12 @@
               "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker models TLC.json, Testinium.json and Parabank.json are provided to you. You are tasked with generating graphwalker model-based test cases for these models and save them in provided txt files. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
               "status": "success",
               "notes": "Required 3 attempts with same prompt to get response"
+            },
+            {
+              "attempt": 2,
+              "prompt": "You are an expert in Software Testing, specialized in Model-Based Testing, and an expert in the Graphwalker tool. Graphwalker model Risc-V.json is provided to you. You are tasked with generating graphwalker model-based test cases for this model and save it in provided txt file. You will create a test suite having 100% random vertex coverage. Please create the test suite in raw form, as shown in the example below:\n{\"currentElementName\":\"start\"} {\"currentElementName\":\"s\"} {\"currentElementName\":\"q0\"} {\"currentElementName\":\"h\"} {\"currentElementName\":\"q8\"}",
+              "status": "failed",
+              "notes": "Told added the test suites to the file but file was empty (3 times)"
             }
           ]
         }

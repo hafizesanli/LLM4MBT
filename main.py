@@ -3,7 +3,6 @@ import os.path
 import json
 from graph_conversions import *
 from utility_functions import *
-from tlc_runner import run_tlc_on_model
 
 def check_if_path_exist(links, source, target):
     for link in links:

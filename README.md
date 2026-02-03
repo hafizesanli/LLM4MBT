@@ -32,7 +32,7 @@ This project provides tools to:
 
 ### Key Features
 
-- Support for multiple GraphWalker models (TLC, Parabank, Testinium)
+- Support for multiple GraphWalker models (TLC, Parabank, Testinium, Risc-V)
 - Three coverage strategies: Quick Random Edge Coverage (QEC), Random Edge Coverage (REC), and Vertex Coverage (VC)
 - Flexible success criteria: Pass with either ≥70% edge coverage OR ≥85% vertex coverage
 - Automatic test execution with path validation and restart capability
@@ -50,23 +50,31 @@ This project provides tools to:
 LLM4MBT/
 ├── main.py                          # Main test execution and comparison engine
 ├── graph_conversions.py             # JSON model parsing and graph conversion
-├── tlc_runner.py                    # TLC-specific test suite runner
 ├── utility_functions.py             # Helper functions for array comparison
 ├── prompts.json                     # LLM prompts used for test generation
 │
 ├── json_models/                     # GraphWalker JSON models
 │   ├── TLC.json                     
-│   ├── Parabank.json                
+│   ├── Parabank.json
+│   ├── Risc-V.json                
 │   └── Testinium.json               
 │
 ├── graphwalker_test_path_logs_edge/ # Reference edge coverage test suites
 │   ├── TLC.txt
 │   ├── Parabank.txt
+│   ├── Risc-V.txt
+│   └── Testinium.txt
+│
+├── graphwalker_test_path_logs_quick/ # Reference quick random edge coverage test suites
+│   ├── TLC.txt
+│   ├── Parabank.txt
+│   ├── Risc-V.txt
 │   └── Testinium.txt
 │
 ├── graphwalker_test_path_logs_vertex/ # Reference vertex coverage test suites
 │   ├── TLC.txt
 │   ├── Parabank.txt
+│   ├── Risc-V.txt
 │   └── Testinium.txt
 │
 ├── QEC-{LLM-Name}/                  # Quick Random Edge Coverage (100%) test suites
@@ -77,6 +85,7 @@ LLM4MBT/
 │   └── QEC-Gemini-2.5-Pro/
 │       ├── TLC.txt
 │       ├── Parabank.txt
+│       ├── Risc-V.txt
 │       └── Testinium.txt
 │
 ├── REC-{LLM-Name}/                  # Random Edge Coverage (100%) test suites
@@ -87,6 +96,7 @@ LLM4MBT/
 │   └── REC-Gemini-2.5-Pro/
 │       ├── TLC.txt
 │       ├── Parabank.txt
+│       ├── Risc-V.txt
 │       └── Testinium.txt
 │
 ├── VC-{LLM-Name}/                   # Vertex Coverage (100%) test suites
@@ -97,6 +107,7 @@ LLM4MBT/
 │   └── VC-Gemini-2.5-Pro/
 │       ├── TLC.txt
 │       ├── Parabank.txt
+│       ├── Risc-V.txt
 │       └── Testinium.txt
 │
 ├── test_reports/                    # Individual test execution reports
@@ -138,18 +149,25 @@ cd LLM4MBT
 - **Complexity**: Simple finite state machine
 - **Use Case**: Basic model for testing fundamental graph traversal
 
-### 2. Parabank
+### 2. Risc-V
 
-- **Vertices**: 60+
-- **Edges**: 150+
+- **Vertices**: 16
+- **Edges**: 36
+- **Complexity**: Moderate finite state machine
+- **Use Case**: Moderately simple model for testing fundamental graph traversal
+
+### 3. Parabank
+
+- **Vertices**: 75
+- **Edges**: 59
 - **Modules**: Login, Register, AccountOverview, AccountActivity, FindTransactions, BillPay, TransferFunds, RequestLoan, UpdateContactInfo, OpenNewAccount
 - **Complexity**: Complex multi-module application
 - **Use Case**: Real-world banking workflow simulation
 
-### 3. Testinium
+### 4. Testinium
 
-- **Vertices**: 100+
-- **Edges**: 200+
+- **Vertices**: 129
+- **Edges**: 259
 - **Modules**: Login, Dashboard, Reports, Projects, Scenarios, Suites
 - **Complexity**: Large-scale enterprise application
 - **Use Case**: Comprehensive test platform with multiple workflows
@@ -470,30 +488,6 @@ coverage = calculate_coverage(test_suite, model)
 print(f"Edge Coverage: {coverage['edge_coverage']}%")
 ```
 
-### `tlc_runner.py`
-
-**TLC-specific test suite runner**
-
-**Key Functions:**
-
-| Function                                                                  | Description                          |
-| ------------------------------------------------------------------------- | ------------------------------------ |
-| `load_tlc_test_suite(tlc_path, remove_duplicates)`                        | Parse TLC test suite from raw format |
-| `run_tlc_on_model(tlc_path, model_json_name, verbose, remove_duplicates)` | Execute TLC test suite on model      |
-
-**Usage:**
-
-```python
-from tlc_runner import run_tlc_on_model
-
-# Run TLC test
-success = run_tlc_on_model(
-    "graphwalker_test_path_logs/TLC.txt",
-    "TLC.json",
-    verbose=True
-)
-```
-
 ### `utility_functions.py`
 
 **Helper utility functions**
@@ -651,7 +645,7 @@ For each element in test suite:
 
 ### For Comparison
 
-1. **Include reference**: Always compare with `graphwalker_test_path_logs_edge/` or `graphwalker_test_path_logs_vertex/`
+1. **Include reference**: Always compare with `graphwalker_test_path_logs_edge/`, `graphwalker_test_path_logs_quick/` or `graphwalker_test_path_logs_vertex/`
 2. **Test all models**: Ensure each LLM directory has TLC.txt, Parabank.txt, and Testinium.txt
 3. **Analyze coverage**: Focus on both edge and vertex coverage metrics
 4. **Compare strategies**: Test the same LLM with different coverage strategies (QEC, REC, VC)
