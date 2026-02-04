@@ -159,7 +159,7 @@ cd LLM4MBT
 ### 3. Parabank
 
 - **Vertices**: 75
-- **Edges**: 59
+- **Edges**: 144
 - **Modules**: Login, Register, AccountOverview, AccountActivity, FindTransactions, BillPay, TransferFunds, RequestLoan, UpdateContactInfo, OpenNewAccount
 - **Complexity**: Complex multi-module application
 - **Use Case**: Real-world banking workflow simulation

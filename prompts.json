@@ -55,7 +55,7 @@
       "model_file": "json_models/Parabank.json",
       "complexity": "Complex",
       "vertices": 75,
-      "edges": 59,
+      "edges": 144,
       "description": "Multi-module banking application with Login, Register, AccountOverview modules"
     },
     "Testinium": {
