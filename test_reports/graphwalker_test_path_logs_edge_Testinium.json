@@ -1,0 +1,15 @@
+{
+  "timestamp": "20260207_131018",
+  "test_file": "graphwalker_test_path_logs_edge/Testinium.txt",
+  "model_file": "json_models/Testinium.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 90.7,
+    "vertex_coverage": 99.22,
+    "covered_edges": 234,
+    "total_edges": 258,
+    "covered_vertices": 128,
+    "total_vertices": 129,
+    "execution_stats": false
+  }
+}

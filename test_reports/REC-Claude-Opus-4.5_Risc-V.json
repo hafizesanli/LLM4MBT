@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260207_131656",
+  "test_file": "REC-Claude-Opus-4.5/Risc-V.txt",
+  "model_file": "json_models/Risc-V.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 100.0,
+    "vertex_coverage": 100.0,
+    "covered_edges": 37,
+    "total_edges": 37,
+    "covered_vertices": 16,
+    "total_vertices": 16,
+    "execution_stats": {
+      "all_paths_valid": true,
+      "total_paths": 54,
+      "successful_paths": 54,
+      "failed_paths": 0,
+      "success_rate": 100.0
+    }
+  }
+}

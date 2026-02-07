@@ -1,0 +1,15 @@
+{
+  "timestamp": "20260207_131755",
+  "test_file": "VC-Claude-Opus-4.5/Testinium.txt",
+  "model_file": "json_models/Testinium.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 80.23,
+    "vertex_coverage": 99.22,
+    "covered_edges": 207,
+    "total_edges": 258,
+    "covered_vertices": 128,
+    "total_vertices": 129,
+    "execution_stats": false
+  }
+}

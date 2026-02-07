@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260207_131049",
+  "test_file": "graphwalker_test_path_logs_edge/Risc-V.txt",
+  "model_file": "json_models/Risc-V.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 97.3,
+    "vertex_coverage": 100.0,
+    "covered_edges": 36,
+    "total_edges": 37,
+    "covered_vertices": 16,
+    "total_vertices": 16,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 266,
+      "successful_paths": 265,
+      "failed_paths": 1,
+      "success_rate": 99.62406015037594
+    }
+  }
+}

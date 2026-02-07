@@ -690,12 +690,23 @@ def save_single_test_report(test_file, model_file, success, coverage, output_dir
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     
-    # Generate timestamp for filenames
-    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    test_name = os.path.basename(test_file).replace('.txt', '')
+    # Extract LLM name and model name from file paths
+    # test_file format: "REC-GPT-5.1/TLC.txt" or similar
+    test_file_parts = test_file.replace('\\', '/').split('/')
+    if len(test_file_parts) >= 2:
+        llm_directory = test_file_parts[-2]  # e.g., "REC-GPT-5.1"
+        model_name = os.path.basename(test_file).replace('.txt', '')  # e.g., "TLC"
+        filename_base = f"{llm_directory}_{model_name}"
+    else:
+        # Fallback to old naming if path structure is different
+        filename_base = os.path.basename(test_file).replace('.txt', '')
     
     # Save JSON report
-    json_filename = os.path.join(output_dir, f"{test_name}_{timestamp}.json")
+    json_filename = os.path.join(output_dir, f"{filename_base}.json")
+    
+    # Generate timestamp for the report content
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    
     json_report = {
         'timestamp': timestamp,
         'test_file': test_file,
@@ -710,7 +721,7 @@ def save_single_test_report(test_file, model_file, success, coverage, output_dir
     print(f"\n JSON report saved: {json_filename}")
     
     # Save TXT report
-    txt_filename = os.path.join(output_dir, f"{test_name}_{timestamp}.txt")
+    txt_filename = os.path.join(output_dir, f"{filename_base}.txt")
     
     with open(txt_filename, 'w', encoding='utf-8') as f:
         f.write("="*80 + "\n")

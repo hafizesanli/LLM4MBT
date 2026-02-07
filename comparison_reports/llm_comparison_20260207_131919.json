@@ -1,0 +1,159 @@
+{
+  "timestamp": "20260207_131919",
+  "summary": {
+    "QEC-Claude-Opus-4.5": {
+      "total_tests": 4,
+      "passed_tests": 4,
+      "failed_tests": 0,
+      "success_rate": 100.0,
+      "avg_edge_coverage": 95.8,
+      "avg_vertex_coverage": 99.805
+    },
+    "QEC-GPT-5.1": {
+      "total_tests": 4,
+      "passed_tests": 3,
+      "failed_tests": 1,
+      "success_rate": 75.0,
+      "avg_edge_coverage": 78.7825,
+      "avg_vertex_coverage": 89.535
+    }
+  },
+  "detailed_results": {
+    "QEC-Claude-Opus-4.5": {
+      "Parabank.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 100.0,
+          "vertex_coverage": 100.0,
+          "covered_edges": 144,
+          "total_edges": 144,
+          "covered_vertices": 75,
+          "total_vertices": 75,
+          "execution_stats": {
+            "all_paths_valid": false,
+            "total_paths": 225,
+            "successful_paths": 46,
+            "failed_paths": 179,
+            "success_rate": 20.444444444444446
+          }
+        }
+      },
+      "Risc-V.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 100.0,
+          "vertex_coverage": 100.0,
+          "covered_edges": 37,
+          "total_edges": 37,
+          "covered_vertices": 16,
+          "total_vertices": 16,
+          "execution_stats": {
+            "all_paths_valid": true,
+            "total_paths": 54,
+            "successful_paths": 54,
+            "failed_paths": 0,
+            "success_rate": 100.0
+          }
+        }
+      },
+      "TLC.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 94.44,
+          "vertex_coverage": 100.0,
+          "covered_edges": 17,
+          "total_edges": 18,
+          "covered_vertices": 10,
+          "total_vertices": 10,
+          "execution_stats": {
+            "all_paths_valid": false,
+            "total_paths": 46,
+            "successful_paths": 44,
+            "failed_paths": 2,
+            "success_rate": 95.65217391304348
+          }
+        }
+      },
+      "Testinium.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 88.76,
+          "vertex_coverage": 99.22,
+          "covered_edges": 229,
+          "total_edges": 258,
+          "covered_vertices": 128,
+          "total_vertices": 129,
+          "execution_stats": false
+        }
+      }
+    },
+    "QEC-GPT-5.1": {
+      "Parabank.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 79.86,
+          "vertex_coverage": 100.0,
+          "covered_edges": 115,
+          "total_edges": 144,
+          "covered_vertices": 75,
+          "total_vertices": 75,
+          "execution_stats": {
+            "all_paths_valid": false,
+            "total_paths": 153,
+            "successful_paths": 27,
+            "failed_paths": 126,
+            "success_rate": 17.647058823529413
+          }
+        }
+      },
+      "Risc-V.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 100.0,
+          "vertex_coverage": 100.0,
+          "covered_edges": 37,
+          "total_edges": 37,
+          "covered_vertices": 16,
+          "total_vertices": 16,
+          "execution_stats": {
+            "all_paths_valid": true,
+            "total_paths": 52,
+            "successful_paths": 52,
+            "failed_paths": 0,
+            "success_rate": 100.0
+          }
+        }
+      },
+      "TLC.txt": {
+        "success": true,
+        "coverage": {
+          "edge_coverage": 100.0,
+          "vertex_coverage": 100.0,
+          "covered_edges": 18,
+          "total_edges": 18,
+          "covered_vertices": 10,
+          "total_vertices": 10,
+          "execution_stats": {
+            "all_paths_valid": true,
+            "total_paths": 53,
+            "successful_paths": 53,
+            "failed_paths": 0,
+            "success_rate": 100.0
+          }
+        }
+      },
+      "Testinium.txt": {
+        "success": false,
+        "coverage": {
+          "edge_coverage": 35.27,
+          "vertex_coverage": 58.14,
+          "covered_edges": 91,
+          "total_edges": 258,
+          "covered_vertices": 75,
+          "total_vertices": 129,
+          "execution_stats": false
+        }
+      }
+    }
+  }
+}

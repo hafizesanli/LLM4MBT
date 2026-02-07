@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260207_131744",
+  "test_file": "VC-Claude-Opus-4.5/Parabank.txt",
+  "model_file": "json_models/Parabank.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 72.92,
+    "vertex_coverage": 92.0,
+    "covered_edges": 105,
+    "total_edges": 144,
+    "covered_vertices": 69,
+    "total_vertices": 75,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 118,
+      "successful_paths": 77,
+      "failed_paths": 41,
+      "success_rate": 65.2542372881356
+    }
+  }
+}

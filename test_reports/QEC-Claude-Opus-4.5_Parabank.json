@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260207_131421",
+  "test_file": "QEC-Claude-Opus-4.5/Parabank.txt",
+  "model_file": "json_models/Parabank.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 100.0,
+    "vertex_coverage": 100.0,
+    "covered_edges": 144,
+    "total_edges": 144,
+    "covered_vertices": 75,
+    "total_vertices": 75,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 225,
+      "successful_paths": 46,
+      "failed_paths": 179,
+      "success_rate": 20.444444444444446
+    }
+  }
+}

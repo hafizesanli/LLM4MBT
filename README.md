@@ -39,7 +39,7 @@ This project provides tools to:
 - Coverage analysis (edge and vertex coverage)
 - Multi-LLM and multi-strategy comparison capabilities
 - Detailed error reporting and failure recovery
-- Both human-readable (TXT) and machine-readable (JSON) reports
+- Both readable (TXT) and (JSON) reports
 - Automatic path resolution relative to script location
 
 ---
@@ -111,8 +111,10 @@ LLM4MBT/
 │       └── Testinium.txt
 │
 ├── test_reports/                    # Individual test execution reports
-│   ├── TLC_20260202_143022.json
-│   └── TLC_20260202_143022.txt
+│   ├── REC-GPT-5.1_TLC.json
+│   ├── REC-GPT-5.1_TLC.txt
+│   ├── QEC-Claude-Opus-4.5_Parabank.json
+│   └── QEC-Claude-Opus-4.5_Parabank.txt
 │
 └── comparison_reports/              # Multi-LLM comparison reports
     ├── llm_comparison_20260202_150133.json
@@ -268,8 +270,8 @@ python main.py --compare QEC-Claude-Opus-4.5/ REC-Claude-Opus-4.5/ VC-Claude-Opu
 
 - Comprehensive comparison report printed to console
 - Automatically saves to `comparison_reports/`:
-  - `llm_comparison_YYYYMMDD_HHMMSS.json` (machine-readable)
-  - `llm_comparison_YYYYMMDD_HHMMSS.txt` (human-readable)
+  - `llm_comparison_YYYYMMDD_HHMMSS.json` 
+  - `llm_comparison_YYYYMMDD_HHMMSS.txt` 
 
 **Sample Comparison Report:**
 
@@ -362,8 +364,12 @@ Generated when using `--save-report` flag or `--single` command:
 
 **Files:**
 
-- `{TestName}_{Timestamp}.json` - Structured data for programmatic access
-- `{TestName}_{Timestamp}.txt` - Human-readable report
+- `{LLM_Directory}_{ModelName}.json` - Structured data for programmatic access
+- `{LLM_Directory}_{ModelName}.txt` - Readable report
+
+**Example filenames:**
+- `REC-GPT-5.1_TLC.json` - Test report for GPT-5.1 with REC strategy on TLC model
+- `QEC-Claude-Opus-4.5_Parabank.txt` - Test report for Claude Opus with QEC strategy on Parabank model
 
 **Contents:**
 
@@ -397,7 +403,7 @@ Automatically generated when using `--compare` command:
 **Files:**
 
 - `llm_comparison_{Timestamp}.json` - Structured comparison data
-- `llm_comparison_{Timestamp}.txt` - Human-readable comparison
+- `llm_comparison_{Timestamp}.txt` - Readable comparison
 
 **JSON Structure:**
 
