@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260208_181616",
+  "test_file": "REC-GPT-5.1/Testinium.txt",
+  "model_file": "json_models/Testinium.json",
+  "success": false,
+  "coverage": {
+    "edge_coverage": 36.43,
+    "vertex_coverage": 55.81,
+    "covered_edges": 94,
+    "total_edges": 258,
+    "covered_vertices": 72,
+    "total_vertices": 129,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 98,
+      "successful_paths": 29,
+      "failed_paths": 69,
+      "success_rate": 29.591836734693878
+    }
+  }
+}

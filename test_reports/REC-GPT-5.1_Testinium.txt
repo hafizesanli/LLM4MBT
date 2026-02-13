@@ -1,17 +1,17 @@
 ================================================================================
 TEST EXECUTION REPORT
-Generated: 2026-02-08 17:25:32
+Generated: 2026-02-08 18:16:16
 ================================================================================
 
-Test File: graphwalker_test_path_logs_vertex/Testinium.txt
+Test File: REC-GPT-5.1/Testinium.txt
 Model File: json_models/Testinium.json
-Status: ✅ PASSED
+Status: ❌ FAILED
 
 ================================================================================
 COVERAGE METRICS
 ================================================================================
 
-Edge Coverage: 91.1% (235/258)
-Vertex Coverage: 100.0% (129/129)
+Edge Coverage: 36.4% (94/258)
+Vertex Coverage: 55.8% (72/129)
 
 ================================================================================

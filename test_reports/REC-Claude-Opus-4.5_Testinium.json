@@ -1,15 +1,21 @@
 {
-  "timestamp": "20260207_131619",
+  "timestamp": "20260208_175612",
   "test_file": "REC-Claude-Opus-4.5/Testinium.txt",
   "model_file": "json_models/Testinium.json",
   "success": true,
   "coverage": {
-    "edge_coverage": 89.15,
-    "vertex_coverage": 99.22,
-    "covered_edges": 230,
+    "edge_coverage": 90.7,
+    "vertex_coverage": 100.0,
+    "covered_edges": 234,
     "total_edges": 258,
-    "covered_vertices": 128,
+    "covered_vertices": 129,
     "total_vertices": 129,
-    "execution_stats": false
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 352,
+      "successful_paths": 239,
+      "failed_paths": 113,
+      "success_rate": 67.89772727272727
+    }
   }
 }

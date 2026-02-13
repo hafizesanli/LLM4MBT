@@ -1,17 +1,17 @@
 ================================================================================
 TEST EXECUTION REPORT
-Generated: 2026-02-08 17:25:32
+Generated: 2026-02-08 12:16:36
 ================================================================================
 
-Test File: graphwalker_test_path_logs_vertex/Testinium.txt
-Model File: json_models/Testinium.json
+Test File: graphwalker_test_path_logs_vertex/TLC.txt
+Model File: json_models/TLC.json
 Status: ✅ PASSED
 
 ================================================================================
 COVERAGE METRICS
 ================================================================================
 
-Edge Coverage: 91.1% (235/258)
-Vertex Coverage: 100.0% (129/129)
+Edge Coverage: 77.8% (14/18)
+Vertex Coverage: 100.0% (10/10)
 
 ================================================================================

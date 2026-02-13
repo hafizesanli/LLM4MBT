@@ -53,3 +53,7 @@ config.local.py
 secrets.py
 .env.local
 .env.production
+
+.venv/
+venv/
+env/

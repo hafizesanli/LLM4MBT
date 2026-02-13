@@ -1,9 +1,9 @@
 ================================================================================
 TEST EXECUTION REPORT
-Generated: 2026-02-08 17:25:32
+Generated: 2026-02-08 18:05:41
 ================================================================================
 
-Test File: graphwalker_test_path_logs_vertex/Testinium.txt
+Test File: QEC-Claude-Sonnet-4.5/Testinium.txt
 Model File: json_models/Testinium.json
 Status: ✅ PASSED
 
@@ -11,7 +11,7 @@ Status: ✅ PASSED
 COVERAGE METRICS
 ================================================================================
 
-Edge Coverage: 91.1% (235/258)
+Edge Coverage: 89.2% (230/258)
 Vertex Coverage: 100.0% (129/129)
 
 ================================================================================

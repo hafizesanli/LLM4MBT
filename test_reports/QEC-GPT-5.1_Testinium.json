@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260208_181449",
+  "test_file": "QEC-GPT-5.1/Testinium.txt",
+  "model_file": "json_models/Testinium.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 88.37,
+    "vertex_coverage": 100.0,
+    "covered_edges": 228,
+    "total_edges": 258,
+    "covered_vertices": 129,
+    "total_vertices": 129,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 338,
+      "successful_paths": 55,
+      "failed_paths": 283,
+      "success_rate": 16.272189349112427
+    }
+  }
+}

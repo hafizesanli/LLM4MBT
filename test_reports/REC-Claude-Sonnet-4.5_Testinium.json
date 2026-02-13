@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260208_180142",
+  "test_file": "REC-Claude-Sonnet-4.5/Testinium.txt",
+  "model_file": "json_models/Testinium.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 89.15,
+    "vertex_coverage": 100.0,
+    "covered_edges": 230,
+    "total_edges": 258,
+    "covered_vertices": 129,
+    "total_vertices": 129,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 345,
+      "successful_paths": 59,
+      "failed_paths": 286,
+      "success_rate": 17.101449275362317
+    }
+  }
+}

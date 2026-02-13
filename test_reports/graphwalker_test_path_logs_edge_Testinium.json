@@ -1,15 +1,21 @@
 {
-  "timestamp": "20260207_131018",
+  "timestamp": "20260208_172514",
   "test_file": "graphwalker_test_path_logs_edge/Testinium.txt",
   "model_file": "json_models/Testinium.json",
   "success": true,
   "coverage": {
-    "edge_coverage": 90.7,
-    "vertex_coverage": 99.22,
-    "covered_edges": 234,
+    "edge_coverage": 91.47,
+    "vertex_coverage": 100.0,
+    "covered_edges": 236,
     "total_edges": 258,
-    "covered_vertices": 128,
+    "covered_vertices": 129,
     "total_vertices": 129,
-    "execution_stats": false
+    "execution_stats": {
+      "all_paths_valid": true,
+      "total_paths": 10399,
+      "successful_paths": 10399,
+      "failed_paths": 0,
+      "success_rate": 100.0
+    }
   }
 }

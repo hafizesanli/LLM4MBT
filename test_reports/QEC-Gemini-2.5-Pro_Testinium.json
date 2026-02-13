@@ -1,0 +1,21 @@
+{
+  "timestamp": "20260208_181923",
+  "test_file": "QEC-Gemini-2.5-Pro/Testinium.txt",
+  "model_file": "json_models/Testinium.json",
+  "success": true,
+  "coverage": {
+    "edge_coverage": 86.82,
+    "vertex_coverage": 100.0,
+    "covered_edges": 224,
+    "total_edges": 258,
+    "covered_vertices": 129,
+    "total_vertices": 129,
+    "execution_stats": {
+      "all_paths_valid": false,
+      "total_paths": 361,
+      "successful_paths": 53,
+      "failed_paths": 308,
+      "success_rate": 14.681440443213297
+    }
+  }
+}
