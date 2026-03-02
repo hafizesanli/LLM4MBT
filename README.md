@@ -51,6 +51,7 @@ LLM4MBT/
 ├── main.py                          # Main test execution and comparison engine
 ├── graph_conversions.py             # JSON model parsing and graph conversion
 ├── utility_functions.py             # Helper functions for array comparison
+├── Replication_Package.md           # Replication package MD file for instructions
 ├── prompts.json                     # LLM prompts used for test generation
 │
 ├── json_models/                     # GraphWalker JSON models
@@ -139,6 +140,9 @@ cd LLM4MBT
 
 # The project is ready to use - no pip install needed
 ```
+#### Replication Package
+# Please see the following package in the repository for replication
+Replication_Pacakge.md
 
 ---
 
